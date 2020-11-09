@@ -27,7 +27,7 @@ router.post('/deleteLink', auth, userControllers.deleteLink);
  * @desc    Get user public profile
  * @access  PUBLIC
  */
-router.get('/:username', userControllers.getProfile);
+router.post('/:username', userControllers.getProfile);
 
 
 module.exports = router;

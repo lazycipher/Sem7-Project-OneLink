@@ -11,21 +11,19 @@ const initialState = {
 };
 
 export default function profileReducer(state = initialState, action) {
-    if(action.type===PROFILE_LOADED) {
-        console.log('action.payload: ', action.payload)
-    }
+    console.log('state before performing', state)
     switch (action.type) {
-        case PROFILE_LOADED: {
-            return {
-                ...state,
-                social: action.payload,
-                isLoaded: true
-            };
-        }
         case PROFILE_LOADING: {
             return {
                 ...state,
                 isLoaded: false
+            };
+        }
+        case PROFILE_LOADED: {
+            return {
+                ...state,
+                isLoaded: true,
+                social: action.payload
             };
         }
         case USER_NOT_FOUND: {

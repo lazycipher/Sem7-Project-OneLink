@@ -68,14 +68,14 @@ const Profile = ({ profile, getProfile }) => {
         }
     }, [username])
 
-    console.log(profile);
     return (
         <>
+        {}
             <Container className={classes.container} maxWidth="sm">
                 <Paper className={classes.paper} elevation={3}>
                     {profile && profile.error===404?<Alert variant="filled" severity="error">"ERROR 404: USER NOT FOUND"</Alert>:null}
                     <List style={{ width: '100%' }}>
-                        {profile.social && profile.social.map(item => (
+                        {profile.social && profile.isLoaded && profile.social.map(item => (
                             <div key={item.name + item.href.toString().slice(0, 5)}>
                                 <ListItem>
                                     <ListItemAvatar>
@@ -107,7 +107,6 @@ const Profile = ({ profile, getProfile }) => {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         profile: state.profile
     }

@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 const Dashboard = ({ auth, isAuthenticated, error, clearErrors, addLink, deleteLink }) => {
-
+    const URLRe = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
     const classes = useStyles();
     const [points, setPoints] = useState([{ name: "", href: "" }])
     const [snackbar, setSnakbar] = useState(false);
@@ -80,12 +80,20 @@ const Dashboard = ({ auth, isAuthenticated, error, clearErrors, addLink, deleteL
     }
     const handleOnSubmit = (e) => {
         e.preventDefault();
-        addLink(points)
+        for(const p of points) {
+            if(URLRe.test(p.href)){
+                addLink(points);
+            } else {
+                setSnakbar(true);
+                return;
+            }
+        }
     }
     const handleContentChange = (e, index) => {
         let values = [...points];
         values[index].href = e.target.value.toString();
         setPoints(values);
+        
     }
     const handleSocialNameChange = (e, index) => {
         let values = [...points];
@@ -164,8 +172,8 @@ const Dashboard = ({ auth, isAuthenticated, error, clearErrors, addLink, deleteL
                         anchorOrigin={{ vertical: "top", horizontal: "right" }}
                         onClose={handleCloseSnackbar}
                     >
-                        <Alert onClose={handleCloseSnackbar} severity="warning">
-                            You should add min. 4 points!
+                        <Alert variant="filled" onClose={handleCloseSnackbar} severity="error">
+                            Invalid Content/URL!
                     </Alert>
                     </Snackbar>
                 </Grid>
@@ -177,7 +185,6 @@ const Dashboard = ({ auth, isAuthenticated, error, clearErrors, addLink, deleteL
 };
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return ({
         auth: state.auth,
         isAuthenticated: state.auth.isAuthenticated,

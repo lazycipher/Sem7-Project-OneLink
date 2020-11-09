@@ -63,7 +63,6 @@ const useStyles = makeStyles((theme) =>
 );
 
 const ExistingLinks = ({ social, deleteLink }) => {
-    console.log('social: ', social)
     const classes = useStyles();
 
     const handleDeleteLink = (name, href) => {

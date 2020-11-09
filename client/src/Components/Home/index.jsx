@@ -15,9 +15,12 @@ import { Alert } from '@material-ui/lab';
 import {clearErrors} from '../../store/actions/errorActions'
 
 const Home = ({ isLoading, isAuthenticated, error, clearErrors }) => {
+
   React.useEffect(() => {
-    setTimeout(clearErrors(), 5000);
-  }, [])
+    const clear = setTimeout(clearErrors, 2000);
+    return () => clearTimeout(clear)
+  }, [error.id]);
+
   const handleCloseError = (event, reason) => {
     if (reason === 'clickaway') {
       return;
