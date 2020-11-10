@@ -58,6 +58,9 @@ const useStyles = makeStyles((theme) =>
         },
         socialHref: {
             width: '60%'
+        },
+        avatar: {
+            background: '#3f51b5'
         }
     }),
 );
@@ -78,7 +81,7 @@ const ExistingLinks = ({ social, deleteLink }) => {
                             <div key={item.name+item.href.toString().slice(0,5)}>
                                 <ListItem>
                                     <ListItemAvatar>
-                                        <Avatar>
+                                        <Avatar className={classes.avatar}>
                                         {item.name.slice(0,1)}
                                         </Avatar>
                                     </ListItemAvatar>

@@ -66,11 +66,11 @@ const useStyles = makeStyles((theme) =>
 const Dashboard = ({ auth, isAuthenticated, error, clearErrors, addLink, deleteLink }) => {
     const URLRe = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
     const classes = useStyles();
-    const [points, setPoints] = useState([{ name: "", href: "" }])
+    const [points, setPoints] = useState([{ name: "", href: "", count: 0 }])
     const [snackbar, setSnakbar] = useState(false);
 
     const handleAddPoint = () => {
-        setPoints([...points, { name: "", href: "" }]);
+        setPoints([...points, { name: "", href: "", count: 0 }]);
     }
 
     const handleRemovePoint = (index) => {
@@ -82,7 +82,13 @@ const Dashboard = ({ auth, isAuthenticated, error, clearErrors, addLink, deleteL
         e.preventDefault();
         for(const p of points) {
             if(URLRe.test(p.href)){
-                addLink(points);
+                console.log(p.href.slice(0,5))
+                if(p.href.slice(0,4)==="http") {
+                    addLink(points);
+                }else {
+                    setSnakbar(true);
+                    return;
+                }
             } else {
                 setSnakbar(true);
                 return;
@@ -173,7 +179,7 @@ const Dashboard = ({ auth, isAuthenticated, error, clearErrors, addLink, deleteL
                         onClose={handleCloseSnackbar}
                     >
                         <Alert variant="filled" onClose={handleCloseSnackbar} severity="error">
-                            Invalid Content/URL!
+                            Invalid Content/URL!(Don't forget http or https)
                     </Alert>
                     </Snackbar>
                 </Grid>

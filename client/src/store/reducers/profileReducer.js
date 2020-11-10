@@ -7,11 +7,11 @@ import {
 const initialState = {
     social: null,
     isLoaded: null,
-    error: null
+    error: null,
+    hits: []
 };
 
 export default function profileReducer(state = initialState, action) {
-    console.log('state before performing', state)
     switch (action.type) {
         case PROFILE_LOADING: {
             return {
@@ -30,6 +30,12 @@ export default function profileReducer(state = initialState, action) {
             return {
                 ...state,
                 error: 404
+            }
+        }
+        case 'HIT_COUNTED': {
+            return {
+                ...state,
+                hits: [action.payload, ...state.hits]
             }
         }
         default:

@@ -14,13 +14,14 @@ import {
     Avatar,
     Typography,
     Divider,
-    CircularProgress
+    CircularProgress,
+    Chip
 } from '@material-ui/core';
 import {
     createStyles,
     makeStyles,
 } from '@material-ui/core/styles';
-import { getProfile } from '../../store/actions/profileActions';
+import { getProfile, pushHits } from '../../store/actions/profileActions';
 import {
     useParams
 } from "react-router-dom";
@@ -59,15 +60,19 @@ const useStyles = makeStyles((theme) =>
     }),
 );
 
-const Profile = ({ profile, getProfile }) => {
+const Profile = ({ profile, getProfile, pushHits }) => {
     const classes = useStyles();
     let { username } = useParams();
     useEffect(() => {
         if(username) {
             getProfile(username);
         }
-    }, [username])
+    }, []);
 
+    const handleOpenLink = (name, href) => {
+        pushHits(username, name, href)
+        window.open(href);
+    }
     return (
         <>
         {}
@@ -80,7 +85,7 @@ const Profile = ({ profile, getProfile }) => {
                                 <ListItem>
                                     <ListItemAvatar>
                                         <Avatar className={classes.avatar}>
-                                            {item.name.slice(0, 1)}
+                                            {item.name.slice(0, 1).toUpperCase()}
                                         </Avatar>
                                     </ListItemAvatar>
                                     <ListItemText
@@ -88,10 +93,13 @@ const Profile = ({ profile, getProfile }) => {
                                         secondary={item.name}
                                     />
                                     <ListItemSecondaryAction>
-                                        <IconButton edge="end" aria-label="delete">
-                                            <Icon>link</Icon>
-                                        </IconButton>
-                                        <IconButton edge="end" aria-label="delete">
+                                        <Chip
+                                            icon={<Icon>visibility</Icon>}
+                                            label={item.count}
+                                            variant="outlined"
+                                            color="secondary"
+                                        />
+                                        <IconButton onClick={() => handleOpenLink(item.name, item.href)} edge="end" aria-label="delete">
                                             <Icon>open_in_new</Icon>
                                         </IconButton>
                                     </ListItemSecondaryAction>
@@ -112,4 +120,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { getProfile })(Profile)
+export default connect(mapStateToProps, { getProfile, pushHits })(Profile)
