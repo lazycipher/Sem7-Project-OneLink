@@ -1,29 +1,17 @@
 const { Schema, model } = require('mongoose');
 
 const ActivitySchema = new Schema({
-  link: {
+  username: {
     type: String
   },
-  author: {
+  name: {
       type: String
   },
-  visitor: {
+  href: {
       type: String,
-      default: "Anonymous"
   },
-  visitor: {
-      country: {
-          type: String
-      },
-      city: {
-          type: String
-      },
-      ip: { 
-        type: String
-      },
-      _json: {
-          type: Object
-      }
+  IP: {
+    type: Object
   },
   activityDate: {
     type: Date,
@@ -31,6 +19,6 @@ const ActivitySchema = new Schema({
   }
 });
 
-const Activity = model('user', ActivitySchema);
+const Activity = model('activity', ActivitySchema);
 
 module.exports = Activity
