@@ -94,10 +94,7 @@ const Stats = () => {
 
   const getData = async () => {
     setLoading(true);
-    const res = await axios.get(
-      "http://localhost:3000/api/v1/user/stats",
-      tokenConfig()
-    );
+    const res = await axios.get("/api/v1/user/stats", tokenConfig());
     setLoading(false);
     console.log("data: ", data);
     setData(res.data);
