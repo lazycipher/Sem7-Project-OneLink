@@ -46,7 +46,6 @@ const useStyles = makeStyles((theme) =>
     paper: {
       padding: theme.spacing(3),
       fontFamily: "roboto",
-      width: "100%",
       marginBottom: "2rem",
     },
     item: {

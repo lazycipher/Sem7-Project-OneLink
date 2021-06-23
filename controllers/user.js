@@ -65,7 +65,6 @@ module.exports = {
   },
   getProfile: async (req, res) => {
     try {
-      console.log("req.params: ", req.params);
       const user = await User.findOne({
         username: req.params.username,
       }).select("-password");
@@ -74,7 +73,7 @@ module.exports = {
         return res.status(404).json({
           msg: "User not found!",
         });
-      res.status(200).json(user.social);
+      res.status(200).json(user);
     } catch (e) {
       res.status(400).json({
         msg: e.message,

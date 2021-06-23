@@ -144,7 +144,7 @@ const Dashboard = ({
                       <InputLabel
                         htmlFor={"outlined-adornment-text-" + index.toString()}
                       >
-                        Website {index + 1}
+                        Network Name
                       </InputLabel>
                       <OutlinedInput
                         id={"outlined-adornment-text-" + index.toString()}
@@ -161,7 +161,7 @@ const Dashboard = ({
                       <InputLabel
                         htmlFor={"outlined-adornment-text-" + index.toString()}
                       >
-                        Link {index + 1}
+                        Link (with http:// or https://)
                       </InputLabel>
                       <OutlinedInput
                         id={"outlined-adornment-text-" + index.toString()}

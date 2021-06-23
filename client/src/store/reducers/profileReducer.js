@@ -19,7 +19,8 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         isLoaded: true,
-        social: action.payload,
+        social: action.payload.social,
+        user: action.payload,
       };
     }
     case USER_NOT_FOUND: {
