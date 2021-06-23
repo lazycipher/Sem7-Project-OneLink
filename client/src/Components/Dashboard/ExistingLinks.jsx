@@ -21,7 +21,8 @@ import {
     InputAdornment,
     Tooltip,
     IconButton,
-    ListItemSecondaryAction
+    ListItemSecondaryAction,
+    Chip
 } from '@material-ui/core';
 import {
     createStyles,
@@ -90,6 +91,12 @@ const ExistingLinks = ({ social, deleteLink }) => {
                                         secondary={item.name}
                                     />
                                     <ListItemSecondaryAction>
+                                    <Chip
+                                            icon={<Icon>visibility</Icon>}
+                                            label={item.count}
+                                            variant="outlined"
+                                            color="secondary"
+                                        />
                                         <IconButton onClick={()=>handleDeleteLink(item.name, item.href)} edge="end" aria-label="delete">
                                             <Icon>delete</Icon>
                                         </IconButton>

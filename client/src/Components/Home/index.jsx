@@ -1,46 +1,48 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import AppNavbar from '../NavBar';
-import Dashboard from '../Dashboard';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
-import Spinner from '../Spinner';
-import GuardedRoute from '../../utils/GuardedRoute';
-import Profile from '../Profile';
-import { Snackbar } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import {clearErrors} from '../../store/actions/errorActions'
+import React from "react";
+import { connect } from "react-redux";
+import AppNavbar from "../NavBar";
+import Dashboard from "../Dashboard";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Spinner from "../Spinner";
+import GuardedRoute from "../../utils/GuardedRoute";
+import Profile from "../Profile";
+import { Snackbar } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
+import { clearErrors } from "../../store/actions/errorActions";
 
 const Home = ({ isLoading, isAuthenticated, error, clearErrors }) => {
-
   React.useEffect(() => {
     const clear = setTimeout(clearErrors, 2000);
-    return () => clearTimeout(clear)
+    return () => clearTimeout(clear);
   }, [error.id]);
 
   const handleCloseError = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     clearErrors();
-  }
+  };
   return (
     <>
-      {!isLoading ?
+      {isAuthenticated !== null ? (
         <>
           <Router>
             <AppNavbar />
             <Switch>
-              <GuardedRoute exact path="/" auth={isAuthenticated} component={Dashboard} />
+              <GuardedRoute
+                exact
+                path="/"
+                auth={isAuthenticated}
+                component={Dashboard}
+              />
               <Route exact path="/user/:username" component={Profile} />
             </Switch>
           </Router>
         </>
-        : <Spinner />}
-      {error.id !== null ?
+      ) : (
+        <Spinner />
+      )}
+      {error.id !== null ? (
         <Snackbar
           open={error.id !== null}
           autoHideDuration={5000}
@@ -51,18 +53,17 @@ const Home = ({ isLoading, isAuthenticated, error, clearErrors }) => {
             {error.msg && error.msg.msg ? error.msg.msg : null}
           </Alert>
         </Snackbar>
-        : null
-      }
+      ) : null}
     </>
   );
-}
+};
 
 const mapStateToProps = (state) => {
   return {
     isLoading: state.auth.isLoading,
     isAuthenticated: state.auth.isAuthenticated,
-    error: state.error
-  }
-}
+    error: state.error,
+  };
+};
 
-export default connect(mapStateToProps, {clearErrors})(Home)
+export default connect(mapStateToProps, { clearErrors })(Home);
