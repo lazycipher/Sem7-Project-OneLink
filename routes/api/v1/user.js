@@ -1,8 +1,6 @@
-const {
-    Router
-} = require('express');
-const auth = require('../../../middlewares/auth');
-const userControllers = require('../../../controllers/user');
+const { Router } = require("express");
+const auth = require("../../../middlewares/auth");
+const userControllers = require("../../../controllers/user");
 const router = Router();
 
 /**
@@ -11,7 +9,7 @@ const router = Router();
  * @access  Private
  */
 
-router.post('/addLink', auth, userControllers.addLink);
+router.post("/addLink", auth, userControllers.addLink);
 
 /**
  * @route   DELETE api/v1/user/deleteLink
@@ -19,21 +17,27 @@ router.post('/addLink', auth, userControllers.addLink);
  * @access  Private
  */
 
-
-router.post('/deleteLink', auth, userControllers.deleteLink);
-
-/**
- * @route   GET api/user/:username
- * @desc    Get user public profile
- * @access  PUBLIC
- */
-router.get('/:username', userControllers.getProfile);
+router.post("/deleteLink", auth, userControllers.deleteLink);
 
 /**
  * @route   POST api/user/pushHits
  * @desc    Push browsing user for details
  * @access  PUBLIC
  */
-router.post('/pushHits', userControllers.pushHits);
+router.post("/pushHits", userControllers.pushHits);
+
+/**
+ * @route   GET api/user/stats
+ * @desc    Get Stats for users dashboard
+ * @access  Private
+ */
+router.get("/stats", auth, userControllers.getStats);
+
+/**
+ * @route   GET api/user/:username
+ * @desc    Get user public profile
+ * @access  PUBLIC
+ */
+router.get("/:username", userControllers.getProfile);
 
 module.exports = router;
